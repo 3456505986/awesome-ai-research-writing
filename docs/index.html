@@ -275,12 +275,13 @@
 
   try {
     // Fetch README.md from repo root
-    const resp = await fetch('../README.md');
+    const RAW = 'https://raw.githubusercontent.com/3456505986/awesome-ai-research-writing/main';
+    const resp = await fetch(RAW + '/README.md');
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     let md = await resp.text();
 
-    // Fix image paths: images/foo.png → ../images/foo.png
-    md = md.replace(/\]\(images\//g, '](../images/');
+    // Fix image paths: images/foo.png → raw.githubusercontent.com/.../images/foo.png
+    md = md.replace(/\]\(images\//g, '](' + RAW + '/images/');
 
     // Configure marked
     marked.setOptions({
@@ -371,7 +372,7 @@
         <p style="color:var(--text-secondary);">无法加载 README.md</p>
         <p style="font-size:0.85rem;color:var(--text-secondary);">${err.message}</p>
         <p style="margin-top:20px;">
-          <a href="../README.md" style="color:var(--accent);">直接查看 README.md →</a>
+          <a href="https://github.com/3456505986/awesome-ai-research-writing/blob/main/README.md" style="color:var(--accent);">直接查看 README.md →</a>
         </p>
       </div>`;
     loadingEl.style.display = 'none';
