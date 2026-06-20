@@ -275,13 +275,10 @@
 
   try {
     // Fetch README.md from repo root
-    const RAW = 'https://raw.githubusercontent.com/3456505986/awesome-ai-research-writing/main';
-    const resp = await fetch(RAW + '/README.md');
+    const resp = await fetch('README.md');
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     let md = await resp.text();
 
-    // Fix image paths: images/foo.png → raw.githubusercontent.com/.../images/foo.png
-    md = md.replace(/\]\(images\//g, '](' + RAW + '/images/');
 
     // Configure marked
     marked.setOptions({
